@@ -8,7 +8,13 @@ namespace Prep1
         {
             Console.WriteLine("This is prep 1");
 
-            // Write your code here
+            Console.Write("what is your first name? ");
+            string first_name= Console.ReadLine();
+
+            Console.Write("what is your last name? ");
+            string last_name= Console.ReadLine();
+
+            Console.Write($"Your name is {last_name} , {first_name} {last_name}");
         }
     }
 }
