@@ -7,17 +7,17 @@ namespace Unit01
         static void Main(string[] args)
         {
             /// tic tac toe - Jacob Bunker 
-            List<string> board = BoardArea();
-
-       
-        }
-         static List<string> BoardArea ()
-        {
             Console.WriteLine("how big of a board do you want? ");
             int BoardSize = int.Parse(Console.ReadLine());
-
+            
+            List<string> boardNum = BoardArea(BoardSize);
+            
+       
+        }
+         static List<string> BoardArea (int BoardSize)
+        {
             List<string> PlayArea = new List<string>();
-            for(int i = 1; i <= BoardSize; i++)
+            for(int i = 1; i <= BoardSize * BoardSize; i++)
             {
                 PlayArea.Add(i.ToString());
             }
@@ -25,9 +25,18 @@ namespace Unit01
             
         }
 
-        /*static List<string> GetNewBoard(int BoardSize)
+        static void GetNewBoard(int BoardSize,List<string> boardNum)
         {
-            
-        }*/
+            int SpaceNum = 0;
+            for(int i = 1; i <= BoardSize; i++)
+            {
+                for(int c = 1; c <= BoardSize; c++)
+                {
+                    Console.Write($"|{boardNum[SpaceNum]}");
+                    SpaceNum++;
+                }
+                Console.WriteLine("--");
+            }
+        }
     }
 }
