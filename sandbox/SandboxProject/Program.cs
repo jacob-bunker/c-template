@@ -27,10 +27,18 @@ namespace Unit01
                 MakeMove(Player,PlayerMove, boardNum );
                 
                 winning = checkWIn(BoardSize,Player,boardNum);
+                if (winning == true)
+                {
+                    break;
+                }
                 
                 Player = switchPlayer(Player);
 
                 TieCheck= IsTie(boardNum);
+                if(TieCheck == false)
+                {
+                    break;
+                }
 
 
                 
@@ -189,28 +197,36 @@ namespace Unit01
             int DiagonalCheck = 0;
             int PlayerScore = 0;
 
-            
-            
-            if(boardNum[0] == player)
+            if (boardNum[0] == player)
             {
-               for(int c = 1; c <= BoardSize; c++)
+                for( int i = 1; i<= BoardSize;i++)
                 {
-                    if(boardNum[DiagonalCheck] ==player)
+                    if(boardNum[DiagonalCheck] == player)
                     {
                         PlayerScore ++;
-                        
                     }
-                    DiagonalCheck += BoardSize;
-                } 
+                    DiagonalCheck += BoardSize +1;
+                }
+
+                if(PlayerScore != BoardSize)
+                {
+                    PlayerScore = 0;
+                    DiagonalCheck = 0;
+                }
             }
-            if(PlayerScore != BoardSize)
+            else if (boardNum[BoardSize -1 ] == player)
             {
-                DiagonalCheck = 0;
-                PlayerScore = 0;
+                DiagonalCheck = BoardSize;
+                for( int i = 1; i<= BoardSize;i++)
+                {
+                    if(boardNum[DiagonalCheck] == player)
+                    {
+                        PlayerScore ++;
+                    }
+                    DiagonalCheck += BoardSize - 1;
+                }
             }
-            
             return PlayerScore;
-            
         }
     }
 }
