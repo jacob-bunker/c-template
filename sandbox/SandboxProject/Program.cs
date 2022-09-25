@@ -12,7 +12,10 @@ namespace Unit01
             List<string> boardNum = BoardArea(BoardSize);
             
             string Player = "x";
-            for(int i = 1; i <= 10; i++)
+
+            bool winning = false;
+            bool TieCheck = true;
+            while (winning != true || TieCheck != false)
             {
                 
                 
@@ -22,10 +25,26 @@ namespace Unit01
                 int PlayerMove = GetMove(Player);
 
                 MakeMove(Player,PlayerMove, boardNum );
-
+                
+                winning = checkWIn(BoardSize,Player,boardNum);
+                
                 Player = switchPlayer(Player);
+
+                TieCheck= IsTie(boardNum);
+
+
+                
             }
-            
+            if (winning == true)
+            {
+                ShowBoard(BoardSize,boardNum);
+                Console.WriteLine($"Player {Player} is the winner!");
+            }
+            else if ( TieCheck == false)
+            {
+                ShowBoard(BoardSize,boardNum);
+                Console.WriteLine("IT'S A TIE!");
+            }
        
         }
          static List<string> BoardArea (int BoardSize)
@@ -77,23 +96,121 @@ namespace Unit01
             return NextPlayer;
         }
 
-        static bool checkWIn()
+        static bool checkWIn(int BoardSize, string player, List<string> boardNum)
         {
             bool isWinner = false;
-            
+            int rowscore = rows(BoardSize,player,boardNum);
+            int columnScore = columns(BoardSize,player,boardNum);
+            int DiagonalScore = Diagonals(BoardSize,player,boardNum);
+            if(rowscore == BoardSize || columnScore == BoardSize || DiagonalScore == BoardSize)
+            {
+                isWinner = true;
+            }
             return isWinner;
         }
+
+        static bool IsTie(List<string> boardNum)
+        {
+            
+            bool foundDigit = false;
+
+            foreach (string value in boardNum)
+            {
+                if (char.IsDigit(value[0]))
+                {
+                    foundDigit = true;
+                    break;
+                }
+            }
+
+            return foundDigit;
+        }
+
         static int rows(int BoardSize, string player, List<string> boardNum)
         {
-            int PlayerX = 0;
-            int PlayerO= 0;
-            int round = 0;
-            int check = 0;
-            for (int i = 1; i <= BoardSize; i++ )
-            {
-                if 
+           int checkspace = 0;
+           int rowcheck = 0;
+           int PlayerScore = 0;
+           for(int i = 1; i <= BoardSize; i++)
+           {
+                if(boardNum[checkspace] == player)
+                {
+                    for(int c = 1; c <= BoardSize; c++)
+                    {
+                        if(boardNum[rowcheck] ==player)
+                        {
+                            PlayerScore ++;
+                            
+                        }
+                        rowcheck ++;
+                    }
+                } 
 
+                if(PlayerScore == BoardSize)
+                {
+                    break;
+                }
+                checkspace =+ BoardSize;
+                rowcheck = checkspace;
+                PlayerScore = 0;
+           }
+           return PlayerScore;
+        }
+        
+        static int columns(int BoardSize, string player, List<string> boardNum)
+        {
+            int columnCheck = 0;
+            int PlayerScore = 0;
+            for (int i = 1; i<= BoardSize; i++)
+            {
+                if(boardNum[i - 1] == player)
+                {
+                   for(int c = 1; c <= BoardSize; c++)
+                    {
+                        if(boardNum[columnCheck] ==player)
+                        {
+                            PlayerScore ++;
+                            
+                        }
+                        columnCheck += BoardSize;
+                    } 
+                }
+                if(PlayerScore == BoardSize)
+                {
+                    break;
+                }
+                columnCheck = 0;
+                PlayerScore = 0;
             }
+            return PlayerScore;
+        }
+        static int Diagonals(int BoardSize,string player,List<string> boardNum)
+        {
+            int DiagonalCheck = 0;
+            int PlayerScore = 0;
+
+            
+            
+            if(boardNum[0] == player)
+            {
+               for(int c = 1; c <= BoardSize; c++)
+                {
+                    if(boardNum[DiagonalCheck] ==player)
+                    {
+                        PlayerScore ++;
+                        
+                    }
+                    DiagonalCheck += BoardSize;
+                } 
+            }
+            if(PlayerScore != BoardSize)
+            {
+                DiagonalCheck = 0;
+                PlayerScore = 0;
+            }
+            
+            return PlayerScore;
+            
         }
     }
 }
