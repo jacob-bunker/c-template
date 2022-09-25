@@ -216,7 +216,7 @@ namespace Unit01
             }
             else if (boardNum[BoardSize -1 ] == player)
             {
-                DiagonalCheck = BoardSize;
+                DiagonalCheck = BoardSize -1;
                 for( int i = 1; i<= BoardSize;i++)
                 {
                     if(boardNum[DiagonalCheck] == player)
